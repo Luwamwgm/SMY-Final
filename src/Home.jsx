@@ -1,5 +1,10 @@
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
+import "./Home.css";
+import Slider from "react-slick";
+import { NavLink } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Home() {
   const auth = useContext(AuthContext);
@@ -9,31 +14,51 @@ export default function Home() {
     name = displayName || email;
   }
 
+  const carouselImages = [
+    "/book1.jpg",
+    "/IMG_20201115_171652.jpg",
+    "/image.png",
+  ];
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <>
-      <h3>{name}</h3>
-
-      <div>
-        <h2>SMY Books and Toys</h2>
+      <div className="home-container">
+        <h1>Welcome to SMY Books and Toys</h1>
+        <div className="cta-buttons">
+          <NavLink to="/SellingPage" className="cta-button">
+            Sell Your Items
+          </NavLink>
+          <NavLink to="/BuyingPage" className="cta-button">
+            Explore Products
+          </NavLink>
+        </div>
         <p>
-          This page is created to help families sell gently used children's toys
-          and books. The users of this site can buy and sell their item. This
-          will help our environment by reusing thing which may not be important
-          for them and buying used one intstead of new ones. It would also be
-          good to get items affordable as those item sold will be cheaper than a
-          new ones.
+          This platform is created to help families sell gently used children's
+          toys and books. Users can buy and sell items, contributing to
+          environmental sustainability by reusing items and providing affordable
+          options for families.
         </p>
-        <img src="/book1.jpg" />
-        <label>Books</label>
+        <Slider {...carouselSettings} className="carousel">
+          {carouselImages.map((image, index) => (
+            <div key={index} className="carousel-item">
+              <img src={image} alt={`Carousel Item ${index + 1}`} />
+            </div>
+          ))}
+        </Slider>
         <p>
-          {" "}
-          For fammilies who want to donate for free can upload their items and
-          put price free. So that the families who may need it can take it. This
-          would be a win win instead of throwing away toys and books finding
-          someone who may use it and whom those need toys and books in lower
-          price or for free would be benefited.
+          Families who want to donate for free can upload items and set the
+          price to free. This helps those in need access items at a lower cost
+          or for free, promoting a sense of community and sustainability.
         </p>
-        <img src="/IMG_20201115_171652.jpg" />
+        <footer>© 2023 SMY Children's Toys and Books Store</footer>
       </div>
     </>
   );
